@@ -8,3 +8,8 @@ Puppeteer is a node.js library, maintained by Google itself. Puppeteer gives you
 - Puppeteer is used for scraping websites.
 - It is used for automated form submission.
 - It is used for automated testing of websites.
+- For more Information visite [Goolge Puppeteer Documentations](https://developers.google.com/web/tools/puppeteer/)
+
+## Author
+[Iqbal](https://github.com/asifmai)
+
