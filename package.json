@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index"
+    "start": "node index",
+    "ship": "git add .&&git commit -m 'update'&&git push"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "puppeteer": "^1.15.0"
+    "puppeteer": "^1.17.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
