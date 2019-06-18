@@ -12,7 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "moment": "^2.24.0",
-    "puppeteer": "^1.17.0"
+    "puppeteer": "^1.17.0",
+    "rimraf": "^2.6.3"
   },
   "devDependencies": {
     "eslint": "^5.16.0",

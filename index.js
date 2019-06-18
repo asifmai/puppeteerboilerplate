@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer');
 const testURL = 'https://intoli.com/blog/not-possible-to-block-chrome-headless/chrome-headless-test.html';
 const moment = require('moment');
 const fs = require('fs');
+const rimraf = require('rimraf');
 
 const runBot = async () => {
   try {
@@ -99,6 +100,7 @@ const launchPage = (browser) => new Promise(async (resolve, reject) => {
 
 const launchBrowser = () => new Promise(async (resolve, reject) => {
   try {
+    rimraf.sync('./tmp');
     const browser = await puppeteer.launch({
       headless: false,                        // To run on headless: true
       args: [
