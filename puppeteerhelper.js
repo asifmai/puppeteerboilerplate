@@ -141,6 +141,12 @@ module.exports.launchPage = (browser, blockResources = false) => {
   });
 }
 
+/**
+ * Fetch html of the given selector from a page using puppeteer 
+ * @param  {string} selector CSS selector from which html is to be fetched
+ * @param  {object} page Page Instance
+ * @return {string} Found: HTML from node, Not Found: Empty string
+ */
 module.exports.getHTML = (selector, page) => new Promise(async (resolve, reject) => {
   try {
     let html = '';
@@ -158,6 +164,12 @@ module.exports.getHTML = (selector, page) => new Promise(async (resolve, reject)
   }
 });
 
+/**
+ * Fetch text of the given selector from a page using puppeteer 
+ * @param  {string} selector CSS selector from which text is to be fetched
+ * @param  {object} page Page Instance
+ * @return {string} Found: Text from node, Not Found: Empty string
+ */
 module.exports.getTxt = (selector, page) => new Promise(async (resolve, reject) => {
   try {
     let txt = '';
@@ -175,6 +187,12 @@ module.exports.getTxt = (selector, page) => new Promise(async (resolve, reject) 
   }
 });
 
+/**
+ * Fetch text from selector matching multiple nodes from a page using puppeteer 
+ * @param  {string} selector CSS selector from which text is to be fetched
+ * @param  {object} page Page Instance
+ * @return {array} Found: Array including texts from all nodes, Not found: Empty Array
+ */
 module.exports.getTxtMultiple = (selector, page) => new Promise(async (resolve, reject) => {
   try {
     let txt = [];
@@ -192,6 +210,13 @@ module.exports.getTxtMultiple = (selector, page) => new Promise(async (resolve, 
   }
 });
 
+/**
+ * Fetch value of given attribute from given selector from a page using puppeteer 
+ * @param  {string} selector CSS selector from which attribute is to be fetched
+ * @param  {string} attribute Attribute name
+ * @param  {object} page Page Instance
+ * @return {string} Found: Value of attribute, Not Found: Empty string
+ */
 module.exports.getAttr = (selector, attribute, page) => new Promise(async (resolve, reject) => {
   try {
     let attr = '';
@@ -213,6 +238,13 @@ module.exports.getAttr = (selector, attribute, page) => new Promise(async (resol
   }
 });
 
+/**
+ * Fetch values of given attribute from given selector matching multiple nodes from a page using puppeteer 
+ * @param  {string} selector CSS selector from which attribute is to be fetched
+ * @param  {string} attribute Attribute name
+ * @param  {object} page Page Instance
+ * @return {string} Found: Array including values of attribute from all matching nodes, Not Found: Empty Array
+ */
 module.exports.getAttrMultiple = (selector, attribute, page) => new Promise(async (resolve, reject) => {
   try {
     let attr = [];
