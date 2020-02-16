@@ -9,7 +9,7 @@ module.exports.launchBrowser = (debug = false) => {
         // slowMo: 10,              // Slow down the browser
         // timeout: 0,              // Disable timeout
         // defaultViewport: null,
-        userDataDir: './temp',
+        // userDataDir: './temp',
         ignoreHTTPSErrors: true,
         devtools: debug,
         args: [
@@ -128,7 +128,9 @@ module.exports.launchPage = (browser, blockResources = false) => {
       //   'value': process.env.LINKEDIN_SESSION_COOKIE_VALUE,
       //   'domain': '.www.linkedin.com'
       // })
-      
+       
+      // Disable Javascript to overcome f/e anti-bot
+      // await page.setJavaScriptEnabled(false);
       
       // Authenticate Proxy Server
       // await page.authenticate({username: proxyUser, password: proxyPassword});

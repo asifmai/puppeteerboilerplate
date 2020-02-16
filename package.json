@@ -2,10 +2,10 @@
   "name": "puppeteerboilerplate",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index",
+    "start": "node app.js",
     "ship": "git add .&&git commit -m 'update'&&git push"
   },
   "author": "",
