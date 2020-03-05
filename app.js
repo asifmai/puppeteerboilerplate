@@ -1,5 +1,5 @@
 const pupHelper = require('./puppeteerhelper');
-const siteLink = "https://digiskills.pk";
+const siteLink = "https://www.yeezysupply.com/product/FV6125";
 
 (async () => {
   const browser = await pupHelper.launchBrowser();
