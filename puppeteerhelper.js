@@ -8,8 +8,8 @@ module.exports.launchBrowser = (debug = false) => {
         // executablePath: 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe',   // Use Windows Browser
         // slowMo: 10,              // Slow down the browser
         // timeout: 0,              // Disable timeout
-        // defaultViewport: null,
         // userDataDir: './temp',
+        defaultViewport: null,
         ignoreHTTPSErrors: true,
         devtools: debug,
         args: [
@@ -121,13 +121,6 @@ module.exports.launchPage = (browser, blockResources = false) => {
       await page.setExtraHTTPHeaders({
         'accept-language': 'en-US,en;q=0.8',
       });
-
-      // Set Session Cookie
-      // await page.setCookie({
-      //   'name': 'li_at',
-      //   'value': process.env.LINKEDIN_SESSION_COOKIE_VALUE,
-      //   'domain': '.www.linkedin.com'
-      // })
        
       // Disable Javascript to overcome f/e anti-bot
       // await page.setJavaScriptEnabled(false);
