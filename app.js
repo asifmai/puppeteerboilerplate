@@ -3,7 +3,7 @@ const {siteLink} = require('./keys');
 let browser;
 
 (async () => {
-  browser = await pupHelper.launchBrowser(true);
+  browser = await pupHelper.launchBrowser();
 
   await run();
   

@@ -70,13 +70,21 @@ await page.keyboard.type('values put into input');
 await page.type('input', 'values put into input');
 
 // Type in Input
-await page.evaluate(val => document.querySelector('input').value=cs, val);
+await page.evaluate(val => document.querySelector('input').value=val, val);
 
 // Set Session Cookie
 await page.setCookie({
   'name': 'li_at',
   'value': process.env.LINKEDIN_SESSION_COOKIE_VALUE,
   'domain': '.www.linkedin.com'
+});
+
+// Select option from Select element
+await page.select('select[name="country"]', 'AU');
+
+// Check or Uncheck a checkbox
+await page.evaluate(() => {
+  document.querySelector("input#profileAgreeTC").checked = true;
 });
 
 // Get Session Cookies and Then use cookies with page
@@ -114,3 +122,14 @@ page.on('response', async (response) => {
     base64Img = buffer.toString('base64');
   }
 })
+
+
+// Change Styling of Elements
+await page.evaluate(() => {
+  document.querySelector('textarea#g-recaptcha-response').style.display = 'block';
+})
+
+// Fill textarea
+await page.evaluate((captchaSolution) => {
+  document.querySelector('textarea#g-recaptcha-response').innerText = captchaSolution;
+}, capchaSolution)

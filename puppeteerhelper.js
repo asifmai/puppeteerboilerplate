@@ -8,7 +8,7 @@ module.exports.launchBrowser = (debug = false) => {
         // executablePath: 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',   // Use Windows Browser
         // slowMo: 10,              // Slow down the browser
         // timeout: 0,              // Disable timeout
-        userDataDir: './temp',
+        // userDataDir: './temp',
         defaultViewport: null,
         ignoreHTTPSErrors: true,
         devtools: debug,
@@ -46,7 +46,7 @@ module.exports.launchPage = (browser, blockResources = false) => {
       const page = await browser.newPage();
 
       // Set page View Port
-      // await page.setViewport({ width: 1366, height: 768 });
+      await page.setViewport({ width: 1366, height: 768 });
 
       // Set user agent for page.
       const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36';
@@ -258,3 +258,26 @@ module.exports.getAttrMultiple = (selector, attribute, page) => new Promise(asyn
     reject(error);
   }
 });
+
+/**
+ * Scroll the page to the bottom
+ * @param {object} page Puppeteer Page Instance
+ */
+module.exports.autoScroll = async (page) => {
+  await page.evaluate(async () => {
+    await new Promise((resolve, reject) => {
+      let totalHeight = 0;
+      const distance = 100;
+      const timer = setInterval(() => {
+        const scrollHeight = document.body.scrollHeight;
+        window.scrollBy(0, distance);
+        totalHeight += distance;
+
+        if (totalHeight >= scrollHeight) {
+          clearInterval(timer);
+          resolve();
+        }
+      }, 100);
+    });
+  });
+}
