@@ -1,3 +1,9 @@
+// Make Sure the Browser restarts itself on error
+browser.on('disconnected', async () => {
+  browser = false;
+  browser = await pupHelper.launchBrowser();
+});
+
 // Promise Snippet
 const functionName = () => new Promise(async (resolve, reject) => {
   let page;
@@ -67,7 +73,7 @@ await page.focus('input');
 await page.keyboard.type('values put into input');
 
 // Type in Input
-await page.type('input', 'values put into input');
+await page.type('input', 'values put into input', {delay: 100});
 
 // Type in Input
 await page.evaluate(val => document.querySelector('input').value=val, val);
