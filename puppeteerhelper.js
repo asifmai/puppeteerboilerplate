@@ -266,9 +266,12 @@ module.exports.getAttrMultiple = (selector, attribute, page) => new Promise(asyn
 module.exports.autoScroll = async (page) => {
   await page.evaluate(async () => {
     await new Promise((resolve, reject) => {
+      let page = 1;
       let totalHeight = 0;
-      const distance = 100;
+      const distance = 1000;
       const timer = setInterval(() => {
+        console.log(`${page} - Scrollig...`);
+        page++;
         const scrollHeight = document.body.scrollHeight;
         window.scrollBy(0, distance);
         totalHeight += distance;
@@ -277,7 +280,7 @@ module.exports.autoScroll = async (page) => {
           clearInterval(timer);
           resolve();
         }
-      }, 100);
+      }, 1000);
     });
   });
 }

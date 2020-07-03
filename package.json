@@ -11,7 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "puppeteer": "^2.1.1"
+    "moment": "^2.27.0",
+    "puppeteer": "^5.0.0",
+    "underscore": "^1.10.2"
   },
   "devDependencies": {
     "eslint": "^5.16.0",

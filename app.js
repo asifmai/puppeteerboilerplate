@@ -2,24 +2,26 @@ const pupHelper = require('./puppeteerhelper');
 const {siteLink} = require('./keys');
 let browser;
 
-(async () => {
-  browser = await pupHelper.launchBrowser();
-
-  await run();
+const run = async () => {
+  try {
+    browser = await pupHelper.launchBrowser();
   
-  await browser.close();
-})()
+    await fetch();
+    
+    await browser.close();
+  } catch (error) {
+    if (browser) await browser.close();
+    return error;
+  }
+};
 
-const run = () => new Promise(async (resolve, reject) => {
+const fetch = () => new Promise(async (resolve, reject) => {
   let page;
   try {
     page = await pupHelper.launchPage(browser);
     const response = await page.goto(siteLink, {timeout: 0, waitUntil: 'load'});
 
-    await page.screenshot({path: 'screenshot.png'})
-    console.log(response.status());
-    console.log(response.statusText());
-    console.log(response.url());
+    // Your Code Here
 
     await page.close();
     resolve(true);
@@ -29,3 +31,5 @@ const run = () => new Promise(async (resolve, reject) => {
     reject(error);
   }
 })
+
+run();

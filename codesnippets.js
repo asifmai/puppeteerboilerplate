@@ -129,6 +129,14 @@ page.on('response', async (response) => {
   }
 })
 
+// Hover over an element on Page (This can also be used to scroll to an element)
+await page.hover('selector');
+
+// Sets the page's geolocation.
+await page.setGeolocation({latitude: 59.95, longitude: 30.31667});
+
+// Enable or Disable Javascript on the Page
+await page.setJavaScriptEnabled(true);
 
 // Change Styling of Elements
 await page.evaluate(() => {

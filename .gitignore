@@ -2,3 +2,5 @@ node_modules
 screenshot.png
 tmp
 temp
+package-lock.json
+.idea
