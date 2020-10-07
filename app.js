@@ -20,7 +20,9 @@ const fetch = () => new Promise(async (resolve, reject) => {
   try {
     page = await pupHelper.launchPage(browser);
     const response = await page.goto(siteLink, {timeout: 0, waitUntil: 'load'});
-
+    await page.waitForSelector('input#vehicle1');
+    const checked = await page.evaluate(() => document.querySelector('input#vehicle1').checked);
+    console.log(checked);
     // Your Code Here
 
     await page.close();

@@ -147,3 +147,13 @@ await page.evaluate(() => {
 await page.evaluate((captchaSolution) => {
   document.querySelector('textarea#g-recaptcha-response').innerText = captchaSolution;
 }, capchaSolution)
+
+// Access All Open Pages inside a Browser
+let pages = await browser.pages();  // This will return an array of page objects
+
+// Relaunching the Browser
+const launchBrowser = async () => {
+  console.log('Launching browser...');
+  browser = await pupHelper.launchBrowser();
+  browser.on("disconnected", launchBrowser);
+}

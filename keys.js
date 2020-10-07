@@ -1,3 +1,3 @@
 module.exports = {
-    siteLink: 'https://www.endclothing.com/gb/puma-rider-day-zero-372711-01.html'
+    siteLink: 'https://www.w3schools.com/html/html_forms.asp'
 }
