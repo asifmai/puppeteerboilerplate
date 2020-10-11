@@ -1,4 +1,5 @@
-const puppeteer = require('puppeteer')
+const puppeteer = require('puppeteer');
+const UserAgent = require('user-agents');
 
 module.exports.launchBrowser = (debug = false) => {
   return new Promise(async (resolve, reject) => {
@@ -49,8 +50,9 @@ module.exports.launchPage = (browser, blockResources = false) => {
       await page.setViewport({ width: 1366, height: 768 });
 
       // Set user agent for page.
-      const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36';
-      await page.setUserAgent(userAgent);
+      // const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36';
+      const userAgent = new UserAgent();
+      await page.setUserAgent(userAgent.toString());
 
       // Pass the Webdriver Test.
       await page.evaluateOnNewDocument(() => {
@@ -268,7 +270,7 @@ module.exports.autoScroll = async (page) => {
     await new Promise((resolve, reject) => {
       let page = 1;
       let totalHeight = 0;
-      const distance = 1000;
+      const distance = 500;
       const timer = setInterval(() => {
         console.log(`${page} - Scrollig...`);
         page++;
