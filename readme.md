@@ -11,6 +11,15 @@ Puppeteer is a node.js library, maintained by Google itself. Puppeteer gives you
 - It is used for automated testing of websites.
 - For more Information visite [Goolge Puppeteer Documentations](https://developers.google.com/web/tools/puppeteer/)
 
+## Installed NPM libraries
+- puppeteer: google puppeteer library
+- moment: to deal with date and time
+- parse-decimal-number: to deal with prices and numbers in different locales
+- underscore: helpful javascript functions
+- user-agents: to automatically generate user agent string
+- underscore.string: to deal with strings
+- p-limit: To create promise pool so we can run limited number of promises at the same time
+
 ## Author
 [Iqbal](https://github.com/asifmai)
 
