@@ -1,15 +1,16 @@
 const pupHelper = require('./puppeteerhelper');
 const {siteLink} = require('./keys');
+let browser;
 
 const run = async () => {
   try {
-    await pupHelper.launchBrowser({debug: true})
+    browser = await pupHelper.launchBrowser();
   
     await fetch();
     
-    await pupHelper.closeBrowser();
+    await browser.close();
   } catch (error) {
-    await pupHelper.closeBrowser();
+    if (browser) await browser.close();
     return error;
   }
 };
@@ -17,9 +18,10 @@ const run = async () => {
 const fetch = () => new Promise(async (resolve, reject) => {
   let page;
   try {
-    page = await pupHelper.launchPage({blockResources: true});
-    const response = await page.goto(siteLink, {timeout: 0, waitUntil: 'load'});
-
+    page = await pupHelper.launchPage(browser);
+    // const response = await page.goto('https://www.jomashop.com/juicy-couture-watches.html?price=%7B"from"%3A800%7D', {timeout: 0, waitUntil: 'load'});
+    const response = await page.goto('https://www.jomashop.com/lucien-piccard-watches.html?price=%7B"from"%3A800%7D', {timeout: 0, waitUntil: 'load'});
+    await page.waitFor(3000);
     // Your Code Here
     console.log(response.status());
     console.log(page.url());
