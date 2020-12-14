@@ -47,7 +47,7 @@ class PuppeteerHelper {
           // slowMo: 10,              // Slow down the browser
           // timeout: 0,              // Disable timeout
           // userDataDir: './temp',
-          defaultViewport: null,
+          // defaultViewport: null,
           ignoreHTTPSErrors: true,
           devtools: params.debug,
           args: [
@@ -64,7 +64,7 @@ class PuppeteerHelper {
             '--disable-dev-shm-usage',
             '--disable-gpu',
             // '--window-size=1366x768',
-            // '--proxy-server=143.255.52.90:8080'
+            '--proxy-server=proxy.crawlera.com:8010'
             // '--user-data-dir',                            // use local data directory called tmp
             // '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36"',
           ],
@@ -139,7 +139,8 @@ class PuppeteerHelper {
   
         // Set Extra Header for request
         await page.setExtraHTTPHeaders({
-          'accept-language': 'en-US,en;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.8',
+          'Proxy-Authorization': 'Basic ' + Buffer.from('733af843d48444da80bc435c727e9cfb:').toString('base64'),
         });
          
         // Disable Javascript to overcome f/e anti-bot
@@ -278,7 +279,6 @@ class PuppeteerHelper {
       });
     });
   }
-
 }
 
 module.exports = new PuppeteerHelper;

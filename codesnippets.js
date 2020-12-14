@@ -68,6 +68,9 @@ await popup.close();
 // Set Page Content
 await page.setContent(pdfContent);
 
+// Get Page Content
+await page.content();
+
 // Type in input
 await page.focus('input');
 await page.keyboard.type('values put into input');
