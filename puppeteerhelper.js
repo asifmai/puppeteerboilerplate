@@ -9,7 +9,7 @@ const blockedResources = [
   'object',
   'beacon',
   'csp_report',
-  'imageset'
+  'imageset',
 ];
 const skippedResources = [
   'quantserve',
@@ -38,7 +38,7 @@ class PuppeteerHelper {
     this.browser = null;
   }
 
-  launchBrowser(params = {debug: false}) {
+  launchBrowser(params = { debug: false }) {
     return new Promise(async (resolve, reject) => {
       try {
         const browser = await puppeteer.launch({
@@ -64,7 +64,7 @@ class PuppeteerHelper {
             '--disable-dev-shm-usage',
             '--disable-gpu',
             // '--window-size=1366x768',
-            '--proxy-server=proxy.crawlera.com:8010'
+            '--proxy-server=proxy.crawlera.com:8010',
             // '--user-data-dir',                            // use local data directory called tmp
             // '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36"',
           ],
@@ -83,7 +83,7 @@ class PuppeteerHelper {
     return new Promise(async (resolve, reject) => {
       try {
         if (this.browser) await this.browser.close();
-        
+
         resolve(true);
       } catch (error) {
         console.log(`closeBrowser Error: ${error}`);
@@ -92,34 +92,34 @@ class PuppeteerHelper {
     });
   }
 
-  launchPage(params = {blockResources: false}) {
+  launchPage(params = { blockResources: false }) {
     return new Promise(async (resolve, reject) => {
       try {
         // Create New Page
         const page = await this.browser.newPage();
-  
+
         // Set page View Port
         await page.setViewport({ width: 1366, height: 768 });
-  
+
         // Set user agent for page.
         const userAgent = new UserAgent();
         await page.setUserAgent(userAgent.toString());
-  
+
         // Pass the Webdriver Test.
         await page.evaluateOnNewDocument(() => {
           Object.defineProperty(navigator, 'webdriver', {
             get: () => false,
           });
-  
+
           Object.defineProperty(navigator, 'languages', {
             get: () => ['en-US', 'en'],
           });
-  
+
           Object.defineProperty(navigator, 'plugins', {
             get: () => [1, 2, 3, 4, 5],
           });
         });
-  
+
         // Block Resources
         if (params.blockResources) {
           // Set Request Interception to avoid receiving images, fonts and stylesheets for fast speed
@@ -128,7 +128,7 @@ class PuppeteerHelper {
             const requestUrl = req._url.split('?')[0].split('#')[0];
             if (
               blockedResources.includes(req.resourceType()) ||
-              skippedResources.some(resource => requestUrl.includes(resource))
+              skippedResources.some((resource) => requestUrl.includes(resource))
             ) {
               req.abort();
             } else {
@@ -136,19 +136,21 @@ class PuppeteerHelper {
             }
           });
         }
-  
+
         // Set Extra Header for request
         await page.setExtraHTTPHeaders({
           'Accept-Language': 'en-US,en;q=0.8',
-          'Proxy-Authorization': 'Basic ' + Buffer.from('733af843d48444da80bc435c727e9cfb:').toString('base64'),
+          'Proxy-Authorization':
+            'Basic ' +
+            Buffer.from('733af843d48444da80bc435c727e9cfb:').toString('base64'),
         });
-         
+
         // Disable Javascript to overcome f/e anti-bot
         // await page.setJavaScriptEnabled(false);
-        
+
         // Authenticate Proxy Server
         // await page.authenticate({username: proxyUser, password: proxyPassword});
-  
+
         resolve(page);
       } catch (error) {
         console.log('Launch Page Error: ', error);
@@ -157,23 +159,21 @@ class PuppeteerHelper {
     });
   }
 
-  getHTML(selector, page){ 
+  getHTML(selector, page) {
     return new Promise(async (resolve, reject) => {
       try {
         let html = '';
         const isNode = await page.$(selector);
         if (isNode) {
-          html = await page.$eval(
-              selector, (elm) => elm.innerHTML.trim()
-          )
-        };
-        
+          html = await page.$eval(selector, (elm) => elm.innerHTML.trim());
+        }
+
         resolve(html);
       } catch (error) {
         console.log(`getHTML Error: ${error}`);
         reject(error);
       }
-    })
+    });
   }
 
   getTxt(selector, page) {
@@ -182,17 +182,15 @@ class PuppeteerHelper {
         let txt = '';
         const isNode = await page.$(selector);
         if (isNode) {
-          txt = await page.$eval(
-              selector, (elm) => elm.innerText.trim()
-          )
-        };
-    
+          txt = await page.$eval(selector, (elm) => elm.innerText.trim());
+        }
+
         resolve(txt);
       } catch (error) {
         console.log(`getTxt Error: ${error}`);
         reject(error);
       }
-    })
+    });
   }
 
   getTxtMultiple(selector, page) {
@@ -201,17 +199,17 @@ class PuppeteerHelper {
         let txt = [];
         const isNode = await page.$(selector);
         if (isNode) {
-          txt = await page.$$eval(
-              selector, elms => elms.map(elm => elm.innerText.trim())
-          )
-        };
-    
+          txt = await page.$$eval(selector, (elms) =>
+            elms.map((elm) => elm.innerText.trim())
+          );
+        }
+
         resolve(txt);
       } catch (error) {
         console.log(`getTxtMultiple Error: ${error}`);
         reject(error);
       }
-    })
+    });
   }
 
   getAttr(selector, attribute, page) {
@@ -227,14 +225,14 @@ class PuppeteerHelper {
           );
         } else {
           console.log(`Node not found`);
-        };
-    
+        }
+
         resolve(attr);
       } catch (error) {
         console.log(`getAttr Error: ${error}`);
         reject(error);
       }
-    })
+    });
   }
 
   getAttrMultiple(selector, attribute, page) {
@@ -245,17 +243,18 @@ class PuppeteerHelper {
         if (isNode) {
           attr = await page.$$eval(
             selector,
-            (elms, attribute) => elms.map(elm => elm.getAttribute(attribute).trim()),
+            (elms, attribute) =>
+              elms.map((elm) => elm.getAttribute(attribute).trim()),
             attribute
           );
-        };
-    
-        resolve(attr)
+        }
+
+        resolve(attr);
       } catch (error) {
         console.log(`getAttrMultiple Error: ${error}`);
         reject(error);
       }
-    })
+    });
   }
 
   async autoScroll(page) {
@@ -270,7 +269,7 @@ class PuppeteerHelper {
           const scrollHeight = document.body.scrollHeight;
           window.scrollBy(0, distance);
           totalHeight += distance;
-  
+
           if (totalHeight >= scrollHeight) {
             clearInterval(timer);
             resolve();
@@ -281,4 +280,4 @@ class PuppeteerHelper {
   }
 }
 
-module.exports = new PuppeteerHelper;
+module.exports = new PuppeteerHelper();

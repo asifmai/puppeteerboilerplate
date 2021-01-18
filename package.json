@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@infosimples/node_two_captcha": "^1.0.2",
     "json2csv": "^5.0.5",
     "moment": "^2.27.0",
     "p-limit": "^3.0.2",

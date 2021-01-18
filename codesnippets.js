@@ -51,7 +51,10 @@ const imgPath = path.resolve(__dirname, `images/${screenId}.PNG`);
 fs.writeFileSync(imgPath, await viewSource.buffer());
 
 // Take a Screenshot
-await page.screenshot({path: 'screenshot.png'})
+await page.screenshot({path: 'screenshot.png'});
+
+// Disable using Cache in case we are using system browser
+await page.setCacheEnabled(false);
 
 // Create PDF
 await popup.pdf({
