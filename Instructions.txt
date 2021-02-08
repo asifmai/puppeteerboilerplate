@@ -1,8 +1,0 @@
-One Time Setup:
-1) Download and Install Nodejs version 12 from https://nodejs.org/en/
-2) unzip the code, navigate to code folder and run command "npm install"
-
-Running the Bot:
-- navigate to code folder and run command "npm start".
-- it will take some time and will also keep showing the progress to you.
-- Once done it will generate a .m3u file with current date and time inside the folder.

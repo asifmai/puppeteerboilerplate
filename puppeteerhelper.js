@@ -1,16 +1,6 @@
 const puppeteer = require('puppeteer');
 const UserAgent = require('user-agents');
-const blockedResources = [
-  'image',
-  'stylesheet',
-  'media',
-  'font',
-  'texttrack',
-  'object',
-  'beacon',
-  'csp_report',
-  'imageset',
-];
+const blockedResources = ['image', 'stylesheet', 'media', 'font', 'texttrack', 'object', 'beacon', 'csp_report', 'imageset'];
 const skippedResources = [
   'quantserve',
   'adzerk',
@@ -42,19 +32,12 @@ class PuppeteerHelper {
     return new Promise(async (resolve, reject) => {
       try {
         const browser = await puppeteer.launch({
-          // headless: true,
-          // executablePath: 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',   // Use Windows Browser
-          // slowMo: 10,              // Slow down the browser
-          // timeout: 0,              // Disable timeout
-          // userDataDir: './temp',
-          // defaultViewport: null,
           ignoreHTTPSErrors: true,
           devtools: params.debug,
           args: [
             '--disable-setuid-sandbox',
             '--no-sandbox',
             '--disable-infobars',
-            // '--window-position=0,0',
             '--ignore-certifcate-errors',
             '--ignore-certifcate-errors-spki-list',
             '--disable-background-timer-throttling',
@@ -63,10 +46,6 @@ class PuppeteerHelper {
             '--disable-accelerated-2d-canvas',
             '--disable-dev-shm-usage',
             '--disable-gpu',
-            // '--window-size=1366x768',
-            '--proxy-server=proxy.crawlera.com:8010',
-            // '--user-data-dir',                            // use local data directory called tmp
-            // '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36"',
           ],
         });
 
@@ -126,24 +105,13 @@ class PuppeteerHelper {
           await page.setRequestInterception(true);
           page.on('request', (req) => {
             const requestUrl = req._url.split('?')[0].split('#')[0];
-            if (
-              blockedResources.includes(req.resourceType()) ||
-              skippedResources.some((resource) => requestUrl.includes(resource))
-            ) {
+            if (blockedResources.includes(req.resourceType()) || skippedResources.some((resource) => requestUrl.includes(resource))) {
               req.abort();
             } else {
               req.continue();
             }
           });
         }
-
-        // Set Extra Header for request
-        await page.setExtraHTTPHeaders({
-          'Accept-Language': 'en-US,en;q=0.8',
-          'Proxy-Authorization':
-            'Basic ' +
-            Buffer.from('733af843d48444da80bc435c727e9cfb:').toString('base64'),
-        });
 
         // Disable Javascript to overcome f/e anti-bot
         // await page.setJavaScriptEnabled(false);
@@ -199,9 +167,7 @@ class PuppeteerHelper {
         let txt = [];
         const isNode = await page.$(selector);
         if (isNode) {
-          txt = await page.$$eval(selector, (elms) =>
-            elms.map((elm) => elm.innerText.trim())
-          );
+          txt = await page.$$eval(selector, (elms) => elms.map((elm) => elm.innerText.trim()));
         }
 
         resolve(txt);
@@ -218,11 +184,7 @@ class PuppeteerHelper {
         let attr = '';
         const isNode = await page.$(selector);
         if (isNode) {
-          attr = await page.$eval(
-            selector,
-            (elm, attribute) => elm.getAttribute(attribute).trim(),
-            attribute
-          );
+          attr = await page.$eval(selector, (elm, attribute) => elm.getAttribute(attribute).trim(), attribute);
         } else {
           console.log(`Node not found`);
         }
@@ -241,12 +203,7 @@ class PuppeteerHelper {
         let attr = [];
         const isNode = await page.$(selector);
         if (isNode) {
-          attr = await page.$$eval(
-            selector,
-            (elms, attribute) =>
-              elms.map((elm) => elm.getAttribute(attribute).trim()),
-            attribute
-          );
+          attr = await page.$$eval(selector, (elms, attribute) => elms.map((elm) => elm.getAttribute(attribute).trim()), attribute);
         }
 
         resolve(attr);
@@ -262,7 +219,7 @@ class PuppeteerHelper {
       await new Promise((resolve, reject) => {
         let page = 1;
         let totalHeight = 0;
-        const distance = 500;
+        const distance = 250;
         const timer = setInterval(() => {
           console.log(`${page} - Scrollig...`);
           page++;
@@ -274,7 +231,7 @@ class PuppeteerHelper {
             clearInterval(timer);
             resolve();
           }
-        }, 1000);
+        }, 500);
       });
     });
   }
